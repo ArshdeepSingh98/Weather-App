@@ -7,10 +7,6 @@ const DaySelectorStyle = styled.div`
 	padding: 1em 0 0.4em 0;
 	align-items: center;
 	justify-content: center;
-	
-	.selected_day {
-		border: 1px solid gray;
-	}
 `
 
 const DayContainer = styled.div`
@@ -50,13 +46,6 @@ const DaySelector = ({handleDayChange}) =>  {
 	const dd = useMemo(() => DaysToDisplay(forecast, selected, handleChange)
 	, [forecast, selected, handleChange])
 
-	// useEffect(() => {
-	// 	// console.log(Object.keys(forecast.forecast)[0])
-	// 	let day_dom = document.getElementById(Object.keys(forecast.forecast)[0])
-	// 	day_dom.setAttribute("class", day_dom.className + " selected_day")
-	// }, [])
-
-	// console.log(dd)
 	return (
 		<DaySelectorStyle>{dd}</DaySelectorStyle>
 	)
