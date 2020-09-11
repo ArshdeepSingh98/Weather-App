@@ -16,17 +16,17 @@ const HeaderTitle = styled.div`
 `
 
 const Header = () => {
-	const {city} = useContext(Context)
-	const today = new Date()
+	const {city, date} = useContext(Context)
+	const today = new Date(date)
 	const dd = String(today.getDate()).padStart(2, '0');
 	const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 	const yyyy = today.getFullYear();
-	const date = `${dd}.${mm}.${yyyy}`
+	const display_date = `${dd}.${mm}.${yyyy}`
 
 	return (
 		<HeaderStyle>
 			<HeaderTitle>{city}</HeaderTitle>
-			<HeaderTitle>{date}</HeaderTitle>
+			<HeaderTitle>{display_date}</HeaderTitle>
 		</HeaderStyle>
 	)
 }
