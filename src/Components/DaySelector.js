@@ -33,7 +33,6 @@ const DaysToDisplay = (forecast, selected, handleChange) => {
 
 	for (let date in forecast.forecast) {
 		daysToDisplay.push(<DayContainer id={date} key={date} onClick={() => handleChange(date)} selected={date===selected}>{new Date(date).toDateString().slice(0, 3)}</DayContainer>)
-		// console.log("dah", daysToDisplay)
 	}
 
 	return daysToDisplay
