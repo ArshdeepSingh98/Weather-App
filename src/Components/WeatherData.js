@@ -24,7 +24,7 @@ const WeatherIcon = styled.img`
 	position: absolute;
 	top: -135px;
 	right: -100px;
-	filter: drop-shadow(2px 2px 2px rgb(100,100,100));    
+	filter: drop-shadow(5px 7px 3px rgba(0,0,0,0.4));    
 `
 
 const WeatherDataContainer = styled.div`

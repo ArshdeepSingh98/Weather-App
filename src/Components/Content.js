@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 
 const ContentStyle = styled.div`
-	background: rgba(240, 240, 240, 0.3);
+	background: rgba(255, 255, 255, 0.75);
 	width: 100%;
 	height: 100%;
 	padding: 2em 2.5em;

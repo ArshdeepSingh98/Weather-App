@@ -23,7 +23,7 @@ const MainStyle = styled.div`
 	transform: translate(-50%, -50%);
 	border-radius: 3px;
 	overflow: hidden;
-	display: flex;   
+	display: flex;
 `
 
 const EmptyContainer = styled.div`
@@ -33,11 +33,13 @@ const EmptyContainer = styled.div`
 
 const Main = () => {
 	const [weather, setWeather] = useState()
+	const [forecast, setForecast] = useState()
 	const [city, setCity] = useState()
 	const [error, setError] = useState()
 
 	const api_call = async e => {
 		e.preventDefault()
+
 		const location = e.target.elements.location.value
 		if (!location) {
 			setError("Please enter the name of the city.")
@@ -45,7 +47,10 @@ const Main = () => {
 			setCity(null)
 			return
 		}
+
 		const API_KEY = 'b924be4d69eac0e8eef619e2bd530262'
+
+		// api call for weather of displayed city
 		const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${location}&appid=${API_KEY}`
 		const request = axios.get(url)
 		try {
@@ -58,9 +63,27 @@ const Main = () => {
 			setWeather(null)
 			setCity(null)
 		}
+
+		// paid data
+		// api call for next 5 days
+		// TODO: mock it
+		// const url2 = `https://api.openweathermap.org/data/2.5/forecast/daily?units=metric&q=${location}&appid=${API_KEY}`
+
+		// setForecast(response.list)
+
 	}
 
-	// console.log(weather)
+	// console.log(forecast)
+
+	const currentTime = new Date().getHours()
+	if (document.body) {
+		if (7 <= currentTime && currentTime < 20) {
+			document.body.background = "https://source.unsplash.com/1600x900/?sun";
+		}
+		else {
+			document.body.background = "https://source.unsplash.com/1600x900/?moon";
+		}
+	}
 
 	return (
 		<MainStyle>
