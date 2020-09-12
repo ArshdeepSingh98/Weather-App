@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import styled from 'styled-components'
 import axios from 'axios'
 
@@ -11,6 +11,7 @@ import Sidebar from "./Sidebar";
 import WeatherData from "./WeatherData";
 import Error from "./Error";
 import DaySelector from "./DaySelector";
+import TimeSelector from "./TimeSelector";
 
 
 const MainStyle = styled.div`
@@ -59,6 +60,14 @@ const Main = () => {
 		return response
 	}
 
+	const convert_date_to_string = (date) => {
+		const dd = String(date.getDate()).padStart(2, '0');
+		const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+		const yyyy = date.getFullYear();
+		const display_date = `${yyyy}-${mm}-${dd}`
+		return display_date
+	}
+
 	const api_call = async e => {
 		e.preventDefault()
 
@@ -85,7 +94,7 @@ const Main = () => {
 			const response = await request
 			setWeather({...response.data.weather[0], ...response.data.main})
 			setCity(response.data.name)
-			setDate(new Date().toDateString())
+			setDate(convert_date_to_string(new Date()))
 			setError(null)
 		} catch (err) {
 			setError("Please enter valid city name.")
@@ -107,19 +116,26 @@ const Main = () => {
 		}
 	}
 
-	const currentTime = new Date().getHours()
-	if (document.body) {
-		if (7 <= currentTime && currentTime < 20) {
-			document.body.background = "https://source.unsplash.com/1600x900/?sun";
+	useEffect(() => {
+		if (document.body) {
+			const currentTime = new Date().getHours()
+			if (7 <= currentTime && currentTime < 20) {
+				document.body.background = "https://source.unsplash.com/1600x900/?sun";
+			}
+			else {
+				document.body.background = "https://source.unsplash.com/1600x900/?moon";
+			}
 		}
-		else {
-			document.body.background = "https://source.unsplash.com/1600x900/?moon";
-		}
+	}, [])
+
+	const handleDayChange = (d) => {
+		let new_weather_obj = forecast[d][Object.keys(forecast[d])[0]].weather_data
+		setDate(d)
+		setWeather(new_weather_obj)
 	}
 
-	const handleDayChange = (date) => {
-		console.log("day changed", date)
-
+	const handleTimeChange = (time) => {
+		console.log("time changed", time)
 	}
 
 	return (
@@ -135,7 +151,9 @@ const Main = () => {
 					{ error && <Error error={error} /> }
 				</Context.Provider>
 			</Content>
-			<Sidebar />
+			<Sidebar>
+				{ forecast && <TimeSelector handleTimeChange={handleTimeChange} forecast={forecast}/> }
+			</Sidebar>
 		</MainStyle>
 	)
 }

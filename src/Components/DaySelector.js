@@ -16,7 +16,7 @@ const DayContainer = styled.div`
 	width: 48px;
 	padding: 22px 8px;
 	border-radius: 30px;
-	border: ${props => props.selected ? '1px solid gray' : 'none'};
+	border: ${props => props.selected ? '1px solid gray;' : 'none'};
 	height: 100px;
 	align-items: center;
 	justify-content: space-between;
@@ -65,9 +65,7 @@ const DaySelector = ({handleDayChange}) =>  {
 	const dd = useMemo(() => DaysToDisplay(forecast, selected, handleChange)
 	, [forecast, selected, handleChange])
 
-	return (
-		<DaySelectorStyle>{dd}</DaySelectorStyle>
-	)
+	return <DaySelectorStyle>{dd}</DaySelectorStyle>
 }
 
 export default DaySelector

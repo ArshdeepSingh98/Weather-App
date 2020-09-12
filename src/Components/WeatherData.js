@@ -38,13 +38,12 @@ const TextStyle = styled.div`
 `
 
 const WeatherData = () => {
-	const weather = useContext(Context)
-	// console.log("weather", weather)
+	const {weather, date} = useContext(Context)
 
-	const weather_icon_url = `http://openweathermap.org/img/wn/${weather && weather.weather && weather.weather.icon}@4x.png`
-	const temp = weather && weather.weather && weather.weather.temp
-	const weather_type =  weather && weather.weather && weather.weather.main
-	const today = new Date()
+	const weather_icon_url = `http://openweathermap.org/img/wn/${weather && weather.icon}@4x.png`
+	const temp = weather && weather.temp
+	const weather_type =  weather && weather.main
+	const today = new Date(date)
 	const day = today.getDay()
 	const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 	const hours = (today.getHours() % 12) || 12;
