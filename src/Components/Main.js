@@ -122,17 +122,16 @@ const Main = () => {
 		}
 	}
 
-	useEffect(() => {
+	const setBackgroundWeather = () => {
+		const time_of_day = weather && weather.icon.slice(-1)==='d' ? 'sun' : 'moon'
 		if (document.body) {
-			const currentTime = new Date().getHours()
-			if (7 <= currentTime && currentTime < 20) {
-				document.body.background = "https://source.unsplash.com/1600x900/?sun";
-			}
-			else {
-				document.body.background = "https://source.unsplash.com/1600x900/?moon";
-			}
+			document.body.background = `https://source.unsplash.com/1600x900/?${weather ? weather.main : time_of_day},${time_of_day}`;
 		}
-	}, [])
+	}
+
+	useEffect(() => {
+		setBackgroundWeather()
+	})
 
 	const handleDayChange = (d) => {
 		let new_weather_obj = forecast[d][Object.keys(forecast[d])[0]].weather_data
