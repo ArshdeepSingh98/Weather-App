@@ -123,7 +123,7 @@ const Main = () => {
 	}
 
 	const setBackgroundWeather = () => {
-		const time_of_day = weather && weather.icon.slice(-1)==='d' ? 'sun' : 'moon'
+		const time_of_day = weather && weather.icon.slice(-1)==='d' ? 'day' : 'night'
 		if (document.body) {
 			document.body.background = `https://source.unsplash.com/1600x900/?${weather ? weather.main : time_of_day},${time_of_day}`;
 		}
