@@ -37,8 +37,12 @@ const TextStyle = styled.div`
 	font-wight: ${props => props.bold ?? 'normal'};	
 `
 
+const convert_time = (time) => {
+	return `${time.slice(0, 2)%12 || 12}${time.slice(2, 5)} ${time.slice(0, 2) >= 12 ? "PM" : "AM"}`
+}
+
 const WeatherData = () => {
-	const {weather, date} = useContext(Context)
+	const {weather, date, time} = useContext(Context)
 
 	const weather_icon_url = `http://openweathermap.org/img/wn/${weather && weather.icon}@4x.png`
 	const temp = weather && weather.temp
@@ -46,10 +50,6 @@ const WeatherData = () => {
 	const today = new Date(date)
 	const day = today.getDay()
 	const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-	const hours = (today.getHours() % 12) || 12;
-	const minutes = today.getMinutes() < 10 ? '0'+today.getMinutes() : today.getMinutes();
-	const ampm = hours >= 12 ? 'PM' : 'AM';
-	const time = `${hours}:${minutes} ${ampm}`
 
 	return (
 		<WeatherDataStyle>
@@ -58,7 +58,7 @@ const WeatherData = () => {
 				<TextStyle fontSize ={'72px'} bold>{temp}&deg;C</TextStyle>
 			</WeatherIconContainer>
 			<WeatherDataContainer>
-				<TextStyle>{time}</TextStyle>
+				{time && <TextStyle>{convert_time(time)}</TextStyle> }
 				<TextStyle fontSize={'36px'} bold>{weekday[day]}</TextStyle>
 				<TextStyle>{weather_type}</TextStyle>
 			</WeatherDataContainer>

@@ -39,15 +39,21 @@ const Main = () => {
 	const [city, setCity] = useState()
 	const [error, setError] = useState()
 	const [date, setDate] = useState()   // day mapping => ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+	const [time, setTime] = useState()
 
 	const map_forecast_day_to_weather = (forecast_list) => {
 		let response = {}
+		let first_time_set_flag = false;
 
 		for (let key in forecast_list) {
 			const obj = forecast_list[key]
 			const weather_data = {...obj.main, ...obj.weather[0]}
 			const date_str = obj.dt_txt.slice(0, 10)
 			const time_str = obj.dt_txt.slice(11)
+			if (!first_time_set_flag) {
+				setTime(time_str)
+				first_time_set_flag = true
+			}
 			response = {
 				...response,
 				[date_str]: {
@@ -131,17 +137,20 @@ const Main = () => {
 	const handleDayChange = (d) => {
 		let new_weather_obj = forecast[d][Object.keys(forecast[d])[0]].weather_data
 		setDate(d)
+		setTime(Object.keys(forecast[d])[0])
 		setWeather(new_weather_obj)
 	}
 
-	const handleTimeChange = (time) => {
-		console.log("time changed", time)
+	const handleTimeChange = (t) => {
+		let new_weather_obj = forecast[date][t].weather_data
+		setTime(t)
+		setWeather(new_weather_obj)
 	}
 
 	return (
 		<MainStyle>
 			<Content>
-				<Context.Provider value={{ api_call, weather, city, forecast, date}} >
+				<Context.Provider value={{ api_call, weather, city, forecast, date, time}} >
 					<EmptyContainer>
 						<Header />
 						<WeatherSearch />
@@ -152,7 +161,9 @@ const Main = () => {
 				</Context.Provider>
 			</Content>
 			<Sidebar>
-				{ forecast && <TimeSelector handleTimeChange={handleTimeChange} forecast={forecast}/> }
+				<Context.Provider value={{forecast, date, time}} >
+					{ forecast && <TimeSelector handleTimeChange={handleTimeChange} /> }
+				</Context.Provider>
 			</Sidebar>
 		</MainStyle>
 	)
