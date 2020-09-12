@@ -99,10 +99,11 @@ const Main = () => {
 			setForecast(map_forecast_day_to_weather(response.data.list))
 			setError(null)
 		} catch (err) {
-			setError("Forecast error")
+			setError("Enter valid city name.")
 			console.log(err)
 			setWeather(null)
 			setCity(null)
+			setForecast(null)
 		}
 	}
 
