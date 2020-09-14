@@ -1,4 +1,4 @@
-import React, {useContext, useState, useMemo, useCallback} from "react";
+import React, {useContext, useState, useMemo, useCallback, useEffect} from "react";
 import styled from 'styled-components';
 import Context from "../Context";
 
@@ -54,6 +54,10 @@ const TimeSelector = ({handleTimeChange}) => {
 	const {forecast, date, time} = useContext(Context)
 
 	const [selected, setSelected] = useState(time)
+
+	useEffect(() => {
+		setSelected(time)
+	}, [time, setSelected])
 
 	const handleChange = useCallback((time) => {
 		setSelected(time)
