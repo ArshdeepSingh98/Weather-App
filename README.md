@@ -1,9 +1,9 @@
 
 # Weather.io
-
 Simple weather app made in react.
 
 ## Demo
+[Weather App](https://arshdeepsingh98.github.io/Weather-App/)
 
 ## Installation
 * Clone the repository using git clone
